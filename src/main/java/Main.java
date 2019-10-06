@@ -1,8 +1,10 @@
+import data.FileReader;
 import data.InputFormatter;
 import searchengine.SearchEngine;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -13,13 +15,14 @@ public class Main {
             if (args.length < 2)
                 throw new IOException("Please specify path to the file");
 
-            Scanner scanner = new Scanner(System.in);
-            SearchEngine searchEngine = new SearchEngine();
+            var fileReader = new FileReader();
+            var scanner = new Scanner(System.in);
+            var searchEngine = new SearchEngine();
             int userAction = 0;
-            String queryStrategy = "";
-//            String filename;
+            var queryStrategy = "";
+            var filename = "/home/andrey/IdeaProjects/searchengine/src/main/resources/persons.txt";
 
-            searchEngine.init("/home/andrey/IdeaProjects/searchengine/src/main/resources/persons.txt");
+            searchEngine.load(fileReader.readFileAsList(filename), fileReader.readFileAsMap(filename));
 
             do {
                 printMenu();

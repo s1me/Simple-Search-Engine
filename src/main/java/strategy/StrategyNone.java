@@ -3,9 +3,9 @@ package strategy;
 import searchengine.SearchEngine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class to implement algorithm to find matches with NONE search strategy.
@@ -14,26 +14,25 @@ public class StrategyNone implements FindStrategy {
 
     /**
      * Search for lines with no math line and query string
-     * @param query - query string
+     *
+     * @param query      - query string
      * @param wordsIndex - inverted index map
-     * @param data - List with stored strings
+     * @param data       - List with stored strings
      * @return string with found matches
      */
     public List<String> findQuery(String query, Map<String, ArrayList<Integer>> wordsIndex, List<String> data) {
-        List<String> result = new ArrayList<String>(data);
-        String[] words = query.split(" ");
-        Set<String> keys = wordsIndex.keySet();
+        var result = new ArrayList<String>(data);
+        var words = query.split(" ");
+        var keys = wordsIndex.keySet();
 
-        for (String word : words) {
-            for (String key : keys) {
+        Arrays.stream(words).forEach(word -> {
+            keys.forEach(key -> {
                 if (SearchEngine.containsIgnoreCase(key, word)) {
-                    ArrayList<Integer> indexes = wordsIndex.get(key);
-                    for (int i : indexes) {
-                        result.remove(data.get(i));
-                    }
+                    var indexes = wordsIndex.get(key);
+                    indexes.forEach(index -> result.remove(data.get(index)));
                 }
-            }
-        }
+            });
+        });
 
         return result;
     }

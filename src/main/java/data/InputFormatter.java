@@ -14,7 +14,7 @@ public class InputFormatter {
         if (line == null || line.length() == 0)
             throw new IllegalArgumentException("method: \"deleteExtraWhitespaces\" param: line is null");
 
-        char[] chars = line.trim().toCharArray();
+        var chars = line.trim().toCharArray();
         StringBuilder formattedLine = new StringBuilder();
 
         for (int i = 0; i < chars.length; i++) {
